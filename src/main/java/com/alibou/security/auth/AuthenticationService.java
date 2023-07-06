@@ -26,11 +26,13 @@ public class AuthenticationService {
                 .firstname(request.getFirstName())
                 .lastname(request.getLastName())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .role(request.getRole())
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
+                .email(user.getEmail())
+                .role(user.getRole().name())
                 .token(jwtToken)
                 .build();
     }
@@ -44,6 +46,8 @@ public class AuthenticationService {
                     .orElseThrow(  () -> new UsernameNotFoundException("User not found"));
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
+                .email(user.getEmail())
+                .role(user.getRole().name())
                 .token(jwtToken)
                 .build();
     }
@@ -51,8 +55,19 @@ public class AuthenticationService {
     public TokenValidationResponse authenticate(HttpServletRequest request) {
         String token = extractTokenFromRequest(request);
         boolean isValid = jwtService.validateToken(token);
-        return new TokenValidationResponse(isValid);
+
+        if (isValid) {
+            String email = jwtService.extractEmail(token);
+            System.out.println("Extraction de l'email: " + email);
+            String role = jwtService.extractRole(token);
+            System.out.println("Extraction du role: " + role);
+            return new TokenValidationResponse(true, email, role, token);
+        } else {
+            return new TokenValidationResponse(false, null, null, null);
+        }
     }
+
+
     private String extractTokenFromRequest(HttpServletRequest request) {
         String token = null;
         String authorizationHeader = request.getHeader("Authorization");

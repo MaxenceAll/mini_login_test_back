@@ -1,5 +1,6 @@
 package com.alibou.security.config;
 
+import com.alibou.security.user.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,7 +19,7 @@ import java.util.function.Function;
 public class JwtService {
 
     private static final String SECRET_KEY = "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b";
-    private static final int JWT_EXPIRATION = 60 * 1000;
+    private static final int JWT_EXPIRATION = 60 * 100000000;
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -33,8 +34,10 @@ public class JwtService {
             Object> extraClaims,
             UserDetails userDetails
     ) {
-        return Jwts
-                .builder()
+        // Add the role to the claims
+        extraClaims.put("role", userDetails.getAuthorities().stream().findFirst().get().getAuthority());
+
+        return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new java.util.Date(System.currentTimeMillis()))
@@ -84,6 +87,20 @@ public class JwtService {
         }
         return false;
     }
+
+    public String extractEmail(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+    public String extractRole(String token) {
+        Claims claims = extractAllClaims(token);
+        String role = (String) claims.get("role");
+        int underscoreIndex = role.indexOf('_');
+        if (underscoreIndex != -1) {
+            role = role.substring(0, underscoreIndex);
+        }
+        return role;
+    }
+
 
 
 }

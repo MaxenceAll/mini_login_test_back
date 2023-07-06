@@ -1,4 +1,4 @@
-package com.alibou.security.auth;
+package com.alibou.security.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
-    private String token;
-    private String email;
-    private String role;
+public class UserResponse {
+
+    private String message;
+    private boolean result;
+    private String data;
+
+
+
 }
