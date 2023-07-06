@@ -15,7 +15,10 @@ import static com.alibou.security.user.Permission.*;
 public enum Role {
     USER(
             Set.of(
-                    USER_READ
+                    USER_CREATE,
+                    USER_READ,
+                    USER_UPDATE,
+                    USER_DELETE
             )
     ),
     ADMIN(

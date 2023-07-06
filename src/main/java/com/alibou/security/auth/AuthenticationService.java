@@ -29,7 +29,8 @@ public class AuthenticationService {
                 .role(request.getRole())
                 .build();
         userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtService.generateToken(user, user);
+
         return AuthenticationResponse.builder()
                 .email(user.getEmail())
                 .role(user.getRole().name())
@@ -44,7 +45,7 @@ public class AuthenticationService {
                         request.getPassword()));
         var user = userRepository.findByEmail(request.getEmail())
                     .orElseThrow(  () -> new UsernameNotFoundException("User not found"));
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtService.generateToken(user, user);
         return AuthenticationResponse.builder()
                 .email(user.getEmail())
                 .role(user.getRole().name())

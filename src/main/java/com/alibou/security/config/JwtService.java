@@ -1,6 +1,7 @@
 package com.alibou.security.config;
 
 import com.alibou.security.user.Role;
+import com.alibou.security.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -25,17 +26,14 @@ public class JwtService {
     }
 
 
-    // Generate token for user only
-    public String generateToken (UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(UserDetails userDetails, User user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", user.getRole().name());
+
+        return generateToken(claims, userDetails);
     }
-    public String generateToken(
-            Map<String,
-            Object> extraClaims,
-            UserDetails userDetails
-    ) {
-        // Add the role to the claims
-        extraClaims.put("role", userDetails.getAuthorities().stream().findFirst().get().getAuthority());
+
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
 
         return Jwts.builder()
                 .setClaims(extraClaims)
@@ -45,6 +43,7 @@ public class JwtService {
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
