@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "a124d7f1-9ca8-4f41-af61-4ffaf5aed6d5",
+		"name": "mini login tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26296498"
+	},
+	"item": [
+		{
+			"name": "Get all products (NO AUTH)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/products"
+			},
+			"response": []
+		},
+		{
+			"name": "Get 1 product (NO AUTH)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/products/12"
+			},
+			"response": []
+		},
+		{
+			"name": "Create an account (USER)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"USER_nom\",\r\n    \"lastName\": \"USER_prénom\",\r\n    \"email\": \"user@mail.com\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"USER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/v1/auth/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Create an account (ADMIN)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"ADMIN_nom\",\r\n    \"lastName\": \"ADMIN_prénom\",\r\n    \"email\": \"admin@mail.com\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"ADMIN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/v1/auth/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Create an account (MANAGER)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"MANAGER_nom\",\r\n    \"lastName\": \"MANAGER_prénom\",\r\n    \"email\": \"manager@mail.com\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"MANAGER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/v1/auth/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Check AUTH of USER account (copy the Token from previous request)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUl9SRUFEIiwic3ViIjoidXNlckBtYWlsLmNvbSIsImlhdCI6MTY4ODY0NjQyNywiZXhwIjoxNjg4NjQ2NDg3fQ.xeIhdFESC9UsxdAzyCnqDqodlY7Vw2u4XtD5UsnsYpk"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/auth/auth"
+			},
+			"response": []
+		},
+		{
+			"name": "Login the USER account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"user@mail.com\",\r\n    \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/v1/auth/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Login the ADMIN account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin@mail.com\",\r\n    \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/v1/auth/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Login the MANAGER account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"manager@mail.com\",\r\n    \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/v1/auth/login"
+			},
+			"response": []
+		},
+		{
+			"name": "READ on a ADMIN endpoint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSQG1haWwuY29tIiwiaWF0IjoxNjg4NjM3OTE3LCJleHAiOjE2ODg2Mzc5Nzd9.EdaN0TxlM1Iz5fgUki2Cei98TJ5dGH-duVQKV-18txo"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/admin"
+			},
+			"response": []
+		},
+		{
+			"name": "READ on a MANAGER endpoint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYW5hZ2VyQG1haWwuY29tIiwiaWF0IjoxNjg4NjM4NDI5LCJleHAiOjE2ODg2Mzg0ODl9.o1-mDopn_Pg0fP_2R5TQClV3Dfk6SJj2e1xNdm9Go3w"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/manager"
+			},
+			"response": []
+		},
+		{
+			"name": "READ on a USER endpoint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSQG1haWwuY29tIiwiaWF0IjoxNjg4NjM3OTE3LCJleHAiOjE2ODg2Mzc5Nzd9.EdaN0TxlM1Iz5fgUki2Cei98TJ5dGH-duVQKV-18txo"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/user"
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE on a ADMIN endpoint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSQG1haWwuY29tIiwiaWF0IjoxNjg4NjM3OTE3LCJleHAiOjE2ODg2Mzc5Nzd9.EdaN0TxlM1Iz5fgUki2Cei98TJ5dGH-duVQKV-18txo"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/admin"
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE on a MANAGER endpoint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSQG1haWwuY29tIiwiaWF0IjoxNjg4NjM3OTE3LCJleHAiOjE2ODg2Mzc5Nzd9.EdaN0TxlM1Iz5fgUki2Cei98TJ5dGH-duVQKV-18txo"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/manager"
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE on a USER endpoint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSQG1haWwuY29tIiwiaWF0IjoxNjg4NjM3OTE3LCJleHAiOjE2ODg2Mzc5Nzd9.EdaN0TxlM1Iz5fgUki2Cei98TJ5dGH-duVQKV-18txo"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/user"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE on a ADMIN endpoint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2ODg2Mzc4ODksImV4cCI6MTY4ODYzNzk0OX0.pH8bsvs__mFUvSxwc8dtpMXPaX7rPlSIr1g19DJ_Zkw"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/admin"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE on a MANAGER endpoint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSQG1haWwuY29tIiwiaWF0IjoxNjg4NjM3OTE3LCJleHAiOjE2ODg2Mzc5Nzd9.EdaN0TxlM1Iz5fgUki2Cei98TJ5dGH-duVQKV-18txo"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/manager"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE on a USER endpoint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQG1haWwuY29tIiwiaWF0IjoxNjg4NjM4Mjg2LCJleHAiOjE2ODg2MzgzNDZ9.4sS1Frdvlo-yxuMmNVGybn2lWanxdKCFjeG114wkyU8"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/user"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE on a ADMIN endpoint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSQG1haWwuY29tIiwiaWF0IjoxNjg4NjM3OTE3LCJleHAiOjE2ODg2Mzc5Nzd9.EdaN0TxlM1Iz5fgUki2Cei98TJ5dGH-duVQKV-18txo"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/admin"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE on a MANAGER endpoint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSQG1haWwuY29tIiwiaWF0IjoxNjg4NjM3OTE3LCJleHAiOjE2ODg2Mzc5Nzd9.EdaN0TxlM1Iz5fgUki2Cei98TJ5dGH-duVQKV-18txo"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/manager"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE on a USER endpoint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQG1haWwuY29tIiwiaWF0IjoxNjg4NjM4Mjg2LCJleHAiOjE2ODg2MzgzNDZ9.4sS1Frdvlo-yxuMmNVGybn2lWanxdKCFjeG114wkyU8"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/user"
+			},
+			"response": []
+		},
+		{
+			"name": "READ on a ADMIN endpoint Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVU0VSQG1haWwuY29tIiwiaWF0IjoxNjg4NjM3OTE3LCJleHAiOjE2ODg2Mzc5Nzd9.EdaN0TxlM1Iz5fgUki2Cei98TJ5dGH-duVQKV-18txo"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/v1/admin"
+			},
+			"response": []
+		}
+	]
+}

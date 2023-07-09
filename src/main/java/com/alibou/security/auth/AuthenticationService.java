@@ -21,21 +21,28 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
-                .email(request.getEmail())
-                .firstname(request.getFirstName())
-                .lastname(request.getLastName())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole())
-                .build();
-        userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user, user);
+        try {
+            var user = User.builder()
+                    .email(request.getEmail())
+                    .firstname(request.getFirstName())
+                    .lastname(request.getLastName())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(request.getRole())
+                    .build();
+            userRepository.save(user);
+            var jwtToken = jwtService.generateToken(user, user);
 
-        return AuthenticationResponse.builder()
-                .email(user.getEmail())
-                .role(user.getRole().name())
-                .token(jwtToken)
-                .build();
+            return AuthenticationResponse.builder()
+                    .email(user.getEmail())
+                    .role(user.getRole().name())
+                    .token(jwtToken)
+                    .build();
+        } catch (Exception e) {
+            return AuthenticationResponse.builder()
+                    .error("Registration Error")
+                    .message(e.getMessage())
+                    .build();
+        }
     }
 
     public AuthenticationResponse login(AuthenticationRequest request) {
